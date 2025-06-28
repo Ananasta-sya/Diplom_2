@@ -54,7 +54,8 @@ public class LogInUserTests {
         user.setEmail(RandomStringUtils.randomAlphabetic(10));
         userSteps.loginUser(user)
                 .statusCode(SC_UNAUTHORIZED)
-                .body("success", Matchers.is (false));
+                .body("success", Matchers.is (false))
+                .body("message", equalTo("email or password are incorrect"));
 
     }
     @After
