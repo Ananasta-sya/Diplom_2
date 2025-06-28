@@ -14,6 +14,7 @@ import ru.practicum.models.User;
 import ru.practicum.steps.UserSteps;
 
 import static org.apache.http.HttpStatus.SC_UNAUTHORIZED;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
 public class LogInUserTests {
@@ -44,7 +45,8 @@ public class LogInUserTests {
         user.setPassword(RandomStringUtils.randomAlphabetic(10));
         userSteps.loginUser(user)
                 .statusCode(SC_UNAUTHORIZED)
-                .body("success", Matchers.is (false));
+                .body("success", Matchers.is (false))
+                .body("message", equalTo("email or password are incorrect"));
     }
     @Test
     @DisplayName("Вход под существующим пользователем с неверным логином")
@@ -53,6 +55,7 @@ public class LogInUserTests {
         userSteps.loginUser(user)
                 .statusCode(SC_UNAUTHORIZED)
                 .body("success", Matchers.is (false));
+
     }
     @After
     public void tearDown() {
